@@ -17,5 +17,6 @@ Contents
 
     resources
     how_to_contribute
+    README
 
 

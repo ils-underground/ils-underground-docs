@@ -30,7 +30,8 @@ author = 'ils-underground'
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-    "sphinx_rtd_theme",
+    # "sphinx_rtd_theme",
+    "sphinx_rtd_dark_mode",
     "myst_parser",
 ]
 
@@ -74,3 +75,6 @@ html_theme_options = {
 }
 
 html_logo = "img/ils-underground.png"
+
+# user starts in light mode
+default_dark_mode = False

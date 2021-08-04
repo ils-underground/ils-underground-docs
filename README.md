@@ -1,3 +1,5 @@
 # ils-underground-docs
 
-TODO -- Add some basic outline of how to edit these, or point to the doc in the doc that docs how to doc the docs using the docs
+See the link below on how to make changes in order to generate the [https://ils-underground.github.io/](https://ils-underground.github.io/) site:
+
+[Modifying / Adding to the ils-undergound-docs Site](https://ils-underground.github.io/how_to_contribute.html#modifying-adding-to-the-ils-undergound-docs-site)
