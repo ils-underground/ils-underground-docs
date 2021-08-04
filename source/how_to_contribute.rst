@@ -65,7 +65,7 @@ If you're interested in the DIY-route, here's a rough set of steps you can use:
    
       git add .
       git commit -m 'changes to source, super-helpful commit comment here!'
-      git push 
+      git push origin main
       cd build/html
       git add .
       git commit -m 'my super-helpful commit comment here!'
