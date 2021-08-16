@@ -128,8 +128,7 @@ sudo nano /etc/apache2/sites-enabled/000-default-le-ssl.conf
 
 #### Firewall Configuration
 
-To setup a basic firewall, a non-root user, and configure the rest of the environment under which Datasette will run:
-Add a user (I'm just picking my own name here) and follow the prompts.
+This basic firewall configuration will open ports for SSH and the Apache HTTP server.
 
 ```bash
 sudo ufw allow OpenSSH
