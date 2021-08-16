@@ -87,7 +87,7 @@ Install the Certbot--this provides us with a free tool that automates the proces
 sudo apt install certbot python3-certbot-apache
 ```
 
-Before running \`certbot\`, edit the files and add the DNS name you've picked for your site (in this example, it's `collection-analysis.cincy.pl` ) to the \`ServerName\` directive in the `&lt;VirtualHost&gt;` block for your default Apache server configuration--located at `/etc/apache2/sites-available/default-ssl.conf`
+Before running \`certbot\`, edit the files and add the DNS name you've picked for your site (in this example, it's `collection-analysis.cincy.pl` ) to the \`ServerName\` directive in the `<VirtualHost>` block for your default Apache server configuration--located at `/etc/apache2/sites-available/default-ssl.conf`
 
 ```bash
 sudo nano /etc/apache2/sites-available/default-ssl.conf
@@ -114,10 +114,10 @@ If you followed the steps to this point, you should now have a file at this path
 Edit this file:
 
 ```bash
-nano /etc/apache2/sites-enabled/000-default-le-ssl.conf
+sudo nano /etc/apache2/sites-enabled/000-default-le-ssl.conf
 ```
 
-.. add the following to the file `000-default-le-ssl.conf` in the `<VirtualHost *:443> block` to meet your needs (we'll later configure Datasette to use the `/home/` path, and `8010` port being referenced by the configuration here in virtual host configuration block:
+.. add the following to the file `000-default-le-ssl.conf` in the `<VirtualHost *:443>` block to meet your needs (we'll later configure Datasette to use the `/home/` path, and `8010` port being referenced by the configuration here in virtual host configuration block:
 
 ```text
   ProxyPass /home/ http://127.0.0.1:8010/home/
@@ -152,7 +152,7 @@ The firewall should indicate that it's allowing SSH connections, as well as Apac
 
 This account will actually run Datasette itself. It should own all of the Datasette software, configuration files, and SQLite database files.
 
-Add the user: 
+Add the user (you can pick any valid username you wish here):
 
 ```bash
 sudo adduser ray
@@ -164,13 +164,15 @@ Add the user to the SUDOers group (if you wish--it's not required, in fact, you 
 sudo usermod -aG sudo ray
 ```
 
+* * *
+
 Now, we can restart our server, and ensure that everything comes back the way we intend.
 
 ```bash
 sudo shutdown -r now
 ```
 
-Once the server restarts you can test to see if the test web page is loading, and that you can log back in and test that Apache has restarted as well.
+Once the server restarts you can perform various tests to see if you can login to the server, test web server is loading properly, the firewall is still running, etc.
 
 * * *
 
