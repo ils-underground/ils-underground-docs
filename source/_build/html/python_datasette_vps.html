@@ -1,0 +1,481 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Python – Creating a VPS (Virtual Private Server) with Digital Ocean for Hosting Datasette &mdash; ils-underground-docs  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/dark_mode_css/general.css" type="text/css" />
+  <link rel="stylesheet" href="_static/dark_mode_css/dark.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/dark_mode_js/default_light.js"></script>
+        <script src="_static/dark_mode_js/theme_switcher.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: white" >
+          
+
+          
+            <a href="index.html">
+          
+
+          
+            
+            <img src="_static/ils-underground.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="resources.html">Resources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="how_to_contribute.html">How To Contribute</a></li>
+<li class="toctree-l1"><a class="reference internal" href="README.html">README ils-underground.github.io</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">ils-underground-docs</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Python – Creating a VPS (Virtual Private Server) with Digital Ocean for Hosting Datasette</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/python_datasette_vps.md.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="tex2jax_ignore mathjax_ignore section" id="python-creating-a-vps-virtual-private-server-with-digital-ocean-for-hosting-datasette">
+<h1><a class="toc-backref" href="#id1">Python – Creating a VPS (Virtual Private Server) with Digital Ocean for Hosting Datasette</a><a class="headerlink" href="#python-creating-a-vps-virtual-private-server-with-digital-ocean-for-hosting-datasette" title="Permalink to this headline">¶</a></h1>
+<div class="contents topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#python-creating-a-vps-virtual-private-server-with-digital-ocean-for-hosting-datasette" id="id1">Python – Creating a VPS (Virtual Private Server) with Digital Ocean for Hosting Datasette</a></p>
+<ul>
+<li><p><a class="reference internal" href="#setup-vps-digital-ocean-droplet-ubuntu-apache-environment-for-datasette-recipe" id="id2">Setup VPS (Digital Ocean Droplet) + Ubuntu + Apache + Environment for Datasette Recipe</a></p>
+<ul>
+<li><p><a class="reference internal" href="#setup-and-configure-the-server" id="id3">Setup and Configure the Server</a></p>
+<ul>
+<li><p><a class="reference internal" href="#configure-dns" id="id4">Configure DNS</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#install-and-configure-the-software-from-package-managers" id="id5">Install and Configure the Software From Package Managers</a></p>
+<ul>
+<li><p><a class="reference internal" href="#firewall-configuration" id="id6">Firewall Configuration</a></p></li>
+<li><p><a class="reference internal" href="#add-the-non-privileged-user-account" id="id7">Add the Non-Privileged User Account</a></p></li>
+<li><p><a class="reference internal" href="#install-and-configure-datasette" id="id8">Install and Configure Datasette</a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="setup-vps-digital-ocean-droplet-ubuntu-apache-environment-for-datasette-recipe">
+<h2><a class="toc-backref" href="#id2">Setup VPS (Digital Ocean Droplet) + Ubuntu + Apache + Environment for Datasette Recipe</a><a class="headerlink" href="#setup-vps-digital-ocean-droplet-ubuntu-apache-environment-for-datasette-recipe" title="Permalink to this headline">¶</a></h2>
+<p>Below is a fairly detailed guide on how to host a Datasette instance on an inexpensive–$5 per month–Digital Ocean VPS.</p>
+<p>The basic, overall guideline is this:</p>
+<ol class="simple">
+<li><p>Setup and Configure the Server–in this case, it’s a VPS (Virtual Private Server) provided by the cloud computing platform, Digital Ocean.</p></li>
+<li><p>Install and Configure the Software From Package Managers (apt, and pip)–Apache, Python (including pip, Datasette, etc), python3-venv, Let’s Encrypt Certbot, UFW (firewall), non-root-user</p></li>
+<li><p>Finish / tweak configurations for Datasette, download / create database, and test configurations</p></li>
+</ol>
+<hr class="docutils" />
+<div class="section" id="setup-and-configure-the-server">
+<h3><a class="toc-backref" href="#id3">Setup and Configure the Server</a><a class="headerlink" href="#setup-and-configure-the-server" title="Permalink to this headline">¶</a></h3>
+<p>Here are the steps involved in creating the Digital Ocean VPS (Virtual Private Server or “Droplet”)</p>
+<p><em>Note: You of course don’t need to use Digital Ocean–there are many options for hosting, but I’ve found this platform to be inexpensive, reliable, and well-supported.</em></p>
+<p>Here is a general outline for configuring the Droplet:</p>
+<ol class="simple">
+<li><p>Create or login to a digital ocean account</p></li>
+<li><p>Click on “Create” …<br />
+<img alt="png" src="_images/b8eebac1575040bf8534c4649b4594c5" /><br />
+and then select “Droplets” …<br />
+<img alt="668df3d9c53e3e6af8b5e347e4e1df59.png" src="_images/d83ae89df86f4924b37ce79b053dddfa" /></p></li>
+<li><p>I’m going to select <strong>Ubuntu 20.04 LTS,</strong> but other Linux Distributions may work just as well.
+<img alt="99932e405e0d63447e65e295b3d0fd27.png" src="_images/2da9f881385a46ef8a9fec8ec920c137" /><br />
+… and then for the plan, “<strong>Basic / Shared CPU</strong>” and then for CPU options, select “<strong>$5 /mo</strong>”
+<img alt="a3af1342c2f0ff88524c343dd043ebf7.png" src="_images/7d613206d20a4f7ca410cd64763bff9c" /></p></li>
+<li><p>Follow the instructions for adding an SSH key that the VPS will use (this is essential for secure access to the VPS)
+<img alt="bdfb5f6f1fe1e99ce9d01e15dc148b0d.png" src="_images/7dbad4b592854d2da30fd394b18de45e" /></p></li>
+<li><p>Select “1 Droplet” and pick your hostname (I’m naming this one “collection-analysis”)
+<img alt="baae39b7d545b23bfc9877ff533ca586.png" src="_images/760baad3c7a842d7b010d98e1a0f59c6" /></p></li>
+<li><p>After your server is fully setup, you should have something that looks like this. You can now SSH into your new VPS!
+<img alt="Screenshot from 2021-08-15 12-00-00.png" src="_images/323ff1ffc9894740b3235da8a1b5c6e5" /></p></li>
+</ol>
+<hr class="docutils" />
+<div class="section" id="configure-dns">
+<h4><a class="toc-backref" href="#id4">Configure DNS</a><a class="headerlink" href="#configure-dns" title="Permalink to this headline">¶</a></h4>
+<p>To further setup your server, you can configure your DNS to point to the IP Address of your new server. I’m using Hover.com and their DNS tools. Digital Ocean has some of these tools as well if you decide to use their DNS service. Basically, you’ll want to create an “Address Record” (A Record) to resolve to the IP that Digital Ocean has assigned to your newly created Droplet:
+<img alt="Screenshot from 2021-08-15 12-01-00.png" src="_images/11d5c8aee3f142df9f49152a6a12ad6a" /></p>
+</div>
+</div>
+<hr class="docutils" />
+<div class="section" id="install-and-configure-the-software-from-package-managers">
+<h3><a class="toc-backref" href="#id5">Install and Configure the Software From Package Managers</a><a class="headerlink" href="#install-and-configure-the-software-from-package-managers" title="Permalink to this headline">¶</a></h3>
+<p>To setup this Droplet to host Datasette, we’re going to be running a minimal Python environment (for Datasette) and configuring Apache (to act as the proxy server–behind which Datasette will run). Also, we’ll be configuring the firewall, and adding a non-privileged user that will run the Datasette application itself</p>
+<p>SSH to the newly created VPS, and use the following command to update the server:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo apt-get update <span class="p">;</span> sudo apt-get dist-upgrade --yes
+</pre></div>
+</div>
+<p>Make sure that the current versions of python and pip are available and installed:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo apt-get install python3 python3-pip python3-venv 
+</pre></div>
+</div>
+<p>Install and setup the Apache2 server–and we’ll also go ahead and install the two required Apache modules to enable the reverse proxy:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo apt-get install apache2
+sudo a2enmod proxy
+sudo a2enmod proxy_http
+</pre></div>
+</div>
+<p>If you’ve setup your DNS and want to test, you should be able to load the test page at this point
+<img alt="acdce8222858ddc1802ccc54d3ca1a21.png" src="_images/5c5f402166374773b81399a3eff80640" /></p>
+<p>Now is a good time to configure <strong>Let’s Encrypt</strong> for the site to enable TLS for secure connections via the browser. There are more detailed steps available via this community article on the Digital Ocean site: https://www.digitalocean.com/community/tutorials/how-to-secure-apache-with-let-s-encrypt-on-ubuntu-20-04</p>
+<p>Install the Certbot–this provides us with a free tool that automates the process of minting new certificates installing them, and then refreshing them when needed:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo apt install certbot python3-certbot-apache
+</pre></div>
+</div>
+<p>Before running `certbot`, edit the files and add the DNS name you’ve picked for your site (in this example, it’s <code class="docutils literal notranslate"><span class="pre">collection-analysis.cincy.pl</span></code> ) to the `ServerName` directive in the <code class="docutils literal notranslate"><span class="pre">&amp;lt;VirtualHost&amp;gt;</span></code> block for your default Apache server configuration–located at <code class="docutils literal notranslate"><span class="pre">/etc/apache2/sites-available/default-ssl.conf</span></code></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo nano /etc/apache2/sites-available/default-ssl.conf
+</pre></div>
+</div>
+<p><img alt="59fc7f3379dbc301ad7ad07b0f699661.png" src="_images/5b29f186239648a8b79a66549598ba46" /></p>
+<p>Use CertBot to get generate and install a new certificate for Apache (follow the steps, including adding your email–You’ll be notified if there are any issues in re-issuing the certificates):</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo certbot --apache
+</pre></div>
+</div>
+<p>Certbot should have picked up on the server name from the Apache configurations from above and asked you a series of basic questions before generating your certificate. As a result, you should now have a valid certificate installed for Apache!</p>
+<p>You can re-check the site, and you should be re-directed to the HTTS version of the site (if you selected that option from the prompts in the previous step)</p>
+<p><img alt="fbc33a68b8525bb4baff78496c32fbe6.png" src="_images/9b657cc36b01409a859b592401408d60" /></p>
+<p>Next, you’ll want to finish configuring Apache to act as the reverse proxy for the running Datasette process (Datasette is designed to run on localhost, so that’s why we’re using Apache to act as a reverse proxy)</p>
+<p>If you followed the steps to this point, you should now have a file at this path (Certbot created this as the new default configuration for the server, and now has additional information regarding the certificate):
+<code class="docutils literal notranslate"><span class="pre">/etc/apache2/sites-enabled/000-default-le-ssl.conf</span></code>
+Edit this file:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>nano /etc/apache2/sites-enabled/000-default-le-ssl.conf
+</pre></div>
+</div>
+<p>.. add the following to the file <code class="docutils literal notranslate"><span class="pre">000-default-le-ssl.conf</span></code> in the <code class="docutils literal notranslate"><span class="pre">&lt;VirtualHost</span> <span class="pre">*:443&gt;</span> <span class="pre">block</span></code> to meet your needs (we’ll later configure Datasette to use the <code class="docutils literal notranslate"><span class="pre">/home/</span></code> path, and <code class="docutils literal notranslate"><span class="pre">8010</span></code> port being referenced by the configuration here in virtual host configuration block:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>  ProxyPass /home/ http://127.0.0.1:8010/home/
+  ProxyPreserveHost On
+</pre></div>
+</div>
+<hr class="docutils" />
+<div class="section" id="firewall-configuration">
+<h4><a class="toc-backref" href="#id6">Firewall Configuration</a><a class="headerlink" href="#firewall-configuration" title="Permalink to this headline">¶</a></h4>
+<p>To setup a basic firewall, a non-root user, and configure the rest of the environment under which Datasette will run:
+Add a user (I’m just picking my own name here) and follow the prompts.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo ufw allow OpenSSH
+<span class="c1"># Apache Full: This profile opens both port 80 (normal, unencrypted web traffic) and port 443 (TLS/SSL encrypted traffic)</span>
+sudo ufw allow <span class="s2">&quot;Apache Full&quot;</span>
+</pre></div>
+</div>
+<p>Next, enable the firewall and check the status:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo ufw <span class="nb">enable</span>
+sudo ufw status verbose
+</pre></div>
+</div>
+<p>The firewall should indicate that it’s allowing SSH connections, as well as Apache (port 80, and 443)</p>
+</div>
+<hr class="docutils" />
+<div class="section" id="add-the-non-privileged-user-account">
+<h4><a class="toc-backref" href="#id7">Add the Non-Privileged User Account</a><a class="headerlink" href="#add-the-non-privileged-user-account" title="Permalink to this headline">¶</a></h4>
+<p>This account will actually run Datasette itself. It should own all of the Datasette software, configuration files, and SQLite database files.</p>
+<p>Add the user:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo adduser ray
+</pre></div>
+</div>
+<p>Add the user to the SUDOers group (if you wish–it’s not required, in fact, you may not want to, but just in case you do, here’s how):</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo usermod -aG sudo ray
+</pre></div>
+</div>
+<p>Now, we can restart our server, and ensure that everything comes back the way we intend.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo shutdown -r now
+</pre></div>
+</div>
+<p>Once the server restarts you can test to see if the test web page is loading, and that you can log back in and test that Apache has restarted as well.</p>
+</div>
+<hr class="docutils" />
+<div class="section" id="install-and-configure-datasette">
+<h4><a class="toc-backref" href="#id8">Install and Configure Datasette</a><a class="headerlink" href="#install-and-configure-datasette" title="Permalink to this headline">¶</a></h4>
+<p>After that, log back in (using your ssh key) and then change to the non-root user you created above (my usename is <code class="docutils literal notranslate"><span class="pre">ray</span></code> in the example). Make sure these steps are being done by the non-privileged user.</p>
+<p>Switch to the user created previously with the <code class="docutils literal notranslate"><span class="pre">su</span></code> command</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>su ray
+</pre></div>
+</div>
+<p>change to the home directory for the user:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> ~/
+</pre></div>
+</div>
+<p>Once you’re thenon-privileged user, you can now configure the Python virtual environment, and install a (for now) very minimal configuration of Datasette:</p>
+<p>Make the folder where our app files will reside:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>mkdir -p collection-analysis-app
+<span class="nb">cd</span> collection-analysis-app
+</pre></div>
+</div>
+<p>Install the Python virtual environment (into the <code class="docutils literal notranslate"><span class="pre">~/collection-analysis-app/venv/</span></code> folder), activate it, and then upgrade <code class="docutils literal notranslate"><span class="pre">pip</span></code>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3 -m venv venv
+<span class="nb">source</span> venv/bin/activate
+pip install -U pip
+</pre></div>
+</div>
+<p>Install Datasette, and try starting it!:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install -U datasette
+datasette
+</pre></div>
+</div>
+<p>You should see something similar to this:
+<img alt="488f31f082b8ca9a5a69511c14455da0.png" src="_images/a844880e280747529bec406a83afcf97" /></p>
+<p>Press <code class="docutils literal notranslate"><span class="pre">Ctrl</span></code> + <code class="docutils literal notranslate"><span class="pre">C</span></code> to end the process, and return the the prompt.</p>
+<p>To run Datasette, you’ll of course want a <strong>SQLite database</strong> the databases being deployed in the example are called <code class="docutils literal notranslate"><span class="pre">collection-2021-01-04.db</span></code>, and <code class="docutils literal notranslate"><span class="pre">collection-2020-01-06.db</span></code>–they have been generated previously via ILS snapshot data.</p>
+<p>Additional Datasette configurations are shown below.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">metadata.yaml</span></code> file sets a few extra pieces of metadata concerning Datasette (this file can also be assembled using JSON–in fact, that may be easier to assemble of this file piece via a script for example–more on that later)</p>
+<p><code class="docutils literal notranslate"><span class="pre">metadata.yaml</span></code> example:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">title</span><span class="p">:</span> <span class="p p-Indicator">|-</span>
+  <span class="no">Cincinnati &amp; Hamilton County Public Library: Collection Analysis DataSet</span>
+<span class="nt">description_html</span><span class="p">:</span> <span class="p p-Indicator">|-</span>
+  <span class="no">This dataset reprsents the state of the physical collection for the Cincinnati &amp; Hamilton County Public Library </span>
+  <span class="no">for specific dates--as indicated by the datestamp on each database represented below.&lt;br /&gt;</span>
+  <span class="no">&lt;p&gt;Documentation can be found by following the the &quot;Data source&quot; link</span>
+<span class="c1">#  &lt;a href=&quot;https://ilsweb.cincinnatilibrary.org/collection-analysis-docs/&quot;&gt;https://ilsweb.cincinnatilibrary.org/collection-analysis-docs/&lt;/a&gt;</span>
+
+<span class="c1"># data source: https://github.com/plch/collection-analysis</span>
+<span class="nt">source_url</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">https://ilsweb.cincinnatilibrary.org/collection-analysis-docs/</span>
+<span class="c1"># license_url: |-</span>
+<span class="c1">#   https://TODO/</span>
+<span class="nt">extra_css_urls</span><span class="p">:</span> <span class="p p-Indicator">[</span><span class="nv">/static/my.css</span><span class="p p-Indicator">]</span>
+</pre></div>
+</div>
+<p>Starting Datasette seems to be easiest via passing it command line options. Here’s a sample startup script that tells Datasette to host two database files(in immutable mode), along with a number of other configurations:</p>
+<p><code class="docutils literal notranslate"><span class="pre">start_datasette.sh</span></code> example bash script file:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+
+venv/bin/datasette <span class="se">\</span>
+    --metadata<span class="o">=</span>metadata.yaml <span class="se">\</span>
+    -i collection-2021-01-04.db <span class="se">\</span>
+    --inspect-file<span class="o">=</span>collection-2021-01-04.json <span class="se">\</span>
+    -i collection-2020-01-06.db <span class="se">\</span>
+    --inspect-file<span class="o">=</span>collection-2020-01-06.json <span class="se">\</span>
+    --crossdb <span class="se">\</span>
+    --setting hash_urls <span class="m">1</span> <span class="se">\</span>
+    --setting default_cache_ttl_hashed <span class="m">31536000</span> <span class="se">\</span>
+    --setting force_https_urls <span class="nb">true</span> <span class="se">\</span>
+    --setting default_page_size <span class="m">100</span> <span class="se">\</span>
+    --setting sql_time_limit_ms <span class="m">30000</span> <span class="se">\</span>
+    --setting max_returned_rows <span class="m">1000</span> <span class="se">\</span>
+    --setting allow_facet on <span class="se">\</span>
+    --setting allow_facet <span class="nb">true</span> <span class="se">\</span>
+    --setting suggest_facets off <span class="se">\</span>
+    --setting facet_time_limit_ms <span class="m">15000</span> <span class="se">\</span>
+    --setting num_sql_threads <span class="m">20</span> <span class="se">\</span>
+    --setting cache_size_kb <span class="m">5000</span> <span class="se">\</span>
+    --setting base_url /home/ <span class="se">\</span>
+    --static static:static/ <span class="se">\</span>
+    --port <span class="m">8010</span>
+</pre></div>
+</div>
+<p>Datasette will use also recognize custom CSS (read from the directory that’s configured with the <code class="docutils literal notranslate"><span class="pre">static</span></code> parameter value above). Below is a sample CSS.</p>
+<p><code class="docutils literal notranslate"><span class="pre">static/my.css</span></code> example file:</p>
+<div class="highlight-css notranslate"><div class="highlight"><pre><span></span><span class="nt">header</span> <span class="p">{</span>
+  <span class="c">/*if you want to use a logo, include a path to the URL below*/</span>
+  <span class="k">background-image</span><span class="p">:</span> <span class="nb">url</span><span class="p">(</span><span class="s1">&#39;/img/logo.png&#39;</span><span class="p">);</span>
+  <span class="k">background-size</span><span class="p">:</span> <span class="mi">200</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">background-repeat</span><span class="p">:</span> <span class="kc">no-repeat</span><span class="p">;</span>
+  <span class="k">min-height</span><span class="p">:</span> <span class="mi">200</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">background-color</span><span class="p">:</span> <span class="kc">darkgray</span><span class="p">;</span>
+  <span class="k">background-position</span><span class="p">:</span> <span class="kc">bottom</span> <span class="kc">left</span><span class="p">;</span>
+  <span class="n">background-position-x</span><span class="p">:</span> <span class="mi">15</span><span class="kt">px</span><span class="p">;</span>
+  <span class="n">background-position-y</span><span class="p">:</span> <span class="mi">55</span><span class="kt">px</span><span class="p">;</span>  
+<span class="p">}</span>
+
+<span class="nt">footer</span> <span class="p">{</span>
+    <span class="k">background-color</span><span class="p">:</span> <span class="mh">#0C2340</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>See the Datasette Documentation section “<strong>Deploying Datasette</strong>” more details (the section “Running Datasette using systemd”, is especially helpful for restarting Datasette along with the server).<br />
+https://docs.datasette.io/en/stable/deploying.html</p>
+<hr class="docutils" />
+<p>Finally, it may be a good idea to replace the file that Apache serves as the root of the web site with something more useful than the test file Apache and Ubuntu provides. Below is an example:</p>
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;!doctype html&gt;</span>
+<span class="p">&lt;</span><span class="nt">html</span> <span class="na">lang</span><span class="o">=</span><span class="s">&quot;en&quot;</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">charset</span><span class="o">=</span><span class="s">&quot;utf-8&quot;</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;description&quot;</span> <span class="na">content</span><span class="o">=</span><span class="s">&quot;Cincinnati &amp; Hamilton County Public Library&quot;</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;keywords&quot;</span> <span class="na">content</span><span class="o">=</span><span class="s">&quot;Cincinnati &amp; Hamilton County Public Library, CHPL, collection analysis, collection-analysis, data, collection data&quot;</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>Cincinnati <span class="ni">&amp;amp;</span> Hamilton County Public Library: Collection Analysis<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;/home/&quot;</span><span class="p">&gt;</span>https://collection-analysis.cincy.pl/home/<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, ils-underground.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -10,6 +10,7 @@ Python
   :maxdepth: 3
 
   python_rest_api
+  python_datasette_vps
 
 SQL
 ---
