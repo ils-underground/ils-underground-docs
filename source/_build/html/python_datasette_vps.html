@@ -44,7 +44,9 @@
 
     
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="How To Contribute" href="how_to_contribute.html" />
+    <link rel="prev" title="Python – Using the Sierra REST API" href="python_rest_api.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -92,8 +94,19 @@
               
             
             
-              <ul>
-<li class="toctree-l1"><a class="reference internal" href="resources.html">Resources</a></li>
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="resources.html">Resources</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="resources.html#python">Python</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="python_rest_api.html">Python – Using the Sierra REST API</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Python – Creating a VPS (Virtual Private Server) with Digital Ocean for Hosting Datasette</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#setup-vps-digital-ocean-droplet-ubuntu-apache-environment-for-datasette-recipe">Setup VPS (Digital Ocean Droplet) + Ubuntu + Apache + Environment for Datasette Recipe</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="resources.html#sql">SQL</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="how_to_contribute.html">How To Contribute</a></li>
 <li class="toctree-l1"><a class="reference internal" href="README.html">README ils-underground.github.io</a></li>
 </ul>
@@ -144,6 +157,8 @@
     
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
         
+          <li><a href="resources.html">Resources</a> &raquo;</li>
+        
       <li>Python – Creating a VPS (Virtual Private Server) with Digital Ocean for Hosting Datasette</li>
     
     
@@ -157,6 +172,15 @@
     
   </ul>
 
+  
+  <div class="rst-breadcrumbs-buttons" role="navigation" aria-label="breadcrumb navigation">
+      
+        <a href="how_to_contribute.html" class="btn btn-neutral float-right" title="How To Contribute" accesskey="n">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+      
+      
+        <a href="python_rest_api.html" class="btn btn-neutral float-left" title="Python – Using the Sierra REST API" accesskey="p"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+      
+  </div>
   
   <hr/>
 </div>
@@ -179,9 +203,10 @@
 </li>
 <li><p><a class="reference internal" href="#install-and-configure-the-software-from-package-managers" id="id5">Install and Configure the Software From Package Managers</a></p>
 <ul>
-<li><p><a class="reference internal" href="#firewall-configuration" id="id6">Firewall Configuration</a></p></li>
-<li><p><a class="reference internal" href="#add-the-non-privileged-user-account" id="id7">Add the Non-Privileged User Account</a></p></li>
-<li><p><a class="reference internal" href="#install-and-configure-datasette" id="id8">Install and Configure Datasette</a></p></li>
+<li><p><a class="reference internal" href="#install-and-setup-apache-http-server" id="id6">Install and Setup Apache HTTP Server</a></p></li>
+<li><p><a class="reference internal" href="#firewall-configuration" id="id7">Firewall Configuration</a></p></li>
+<li><p><a class="reference internal" href="#add-the-non-privileged-user-account" id="id8">Add the Non-Privileged User Account</a></p></li>
+<li><p><a class="reference internal" href="#install-and-configure-datasette" id="id9">Install and Configure Datasette</a></p></li>
 </ul>
 </li>
 </ul>
@@ -241,7 +266,9 @@ and then select “Droplets” …<br />
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo apt-get install python3 python3-pip python3-venv 
 </pre></div>
 </div>
-<p>Install and setup the Apache2 server–and we’ll also go ahead and install the two required Apache modules to enable the reverse proxy:</p>
+<div class="section" id="install-and-setup-apache-http-server">
+<h4><a class="toc-backref" href="#id6">Install and Setup Apache HTTP Server</a><a class="headerlink" href="#install-and-setup-apache-http-server" title="Permalink to this headline">¶</a></h4>
+<p>Install and setup the Apache server–and we’ll also go ahead and install the two required Apache modules to enable the reverse proxy:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo apt-get install apache2
 sudo a2enmod proxy
 sudo a2enmod proxy_http
@@ -254,7 +281,7 @@ sudo a2enmod proxy_http
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo apt install certbot python3-certbot-apache
 </pre></div>
 </div>
-<p>Before running `certbot`, edit the files and add the DNS name you’ve picked for your site (in this example, it’s <code class="docutils literal notranslate"><span class="pre">collection-analysis.cincy.pl</span></code> ) to the `ServerName` directive in the <code class="docutils literal notranslate"><span class="pre">&amp;lt;VirtualHost&amp;gt;</span></code> block for your default Apache server configuration–located at <code class="docutils literal notranslate"><span class="pre">/etc/apache2/sites-available/default-ssl.conf</span></code></p>
+<p>Before running `certbot`, edit the files and add the DNS name you’ve picked for your site (in this example, it’s <code class="docutils literal notranslate"><span class="pre">collection-analysis.cincy.pl</span></code> ) to the `ServerName` directive in the <code class="docutils literal notranslate"><span class="pre">&lt;VirtualHost&gt;</span></code> block for your default Apache server configuration–located at <code class="docutils literal notranslate"><span class="pre">/etc/apache2/sites-available/default-ssl.conf</span></code></p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo nano /etc/apache2/sites-available/default-ssl.conf
 </pre></div>
 </div>
@@ -270,19 +297,19 @@ sudo a2enmod proxy_http
 <p>If you followed the steps to this point, you should now have a file at this path (Certbot created this as the new default configuration for the server, and now has additional information regarding the certificate):
 <code class="docutils literal notranslate"><span class="pre">/etc/apache2/sites-enabled/000-default-le-ssl.conf</span></code>
 Edit this file:</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>nano /etc/apache2/sites-enabled/000-default-le-ssl.conf
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo nano /etc/apache2/sites-enabled/000-default-le-ssl.conf
 </pre></div>
 </div>
-<p>.. add the following to the file <code class="docutils literal notranslate"><span class="pre">000-default-le-ssl.conf</span></code> in the <code class="docutils literal notranslate"><span class="pre">&lt;VirtualHost</span> <span class="pre">*:443&gt;</span> <span class="pre">block</span></code> to meet your needs (we’ll later configure Datasette to use the <code class="docutils literal notranslate"><span class="pre">/home/</span></code> path, and <code class="docutils literal notranslate"><span class="pre">8010</span></code> port being referenced by the configuration here in virtual host configuration block:</p>
+<p>.. add the following to the file <code class="docutils literal notranslate"><span class="pre">000-default-le-ssl.conf</span></code> in the <code class="docutils literal notranslate"><span class="pre">&lt;VirtualHost</span> <span class="pre">*:443&gt;</span></code> block to meet your needs (we’ll later configure Datasette to use the <code class="docutils literal notranslate"><span class="pre">/home/</span></code> path, and <code class="docutils literal notranslate"><span class="pre">8010</span></code> port being referenced by the configuration here in virtual host configuration block:</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>  ProxyPass /home/ http://127.0.0.1:8010/home/
   ProxyPreserveHost On
 </pre></div>
 </div>
+</div>
 <hr class="docutils" />
 <div class="section" id="firewall-configuration">
-<h4><a class="toc-backref" href="#id6">Firewall Configuration</a><a class="headerlink" href="#firewall-configuration" title="Permalink to this headline">¶</a></h4>
-<p>To setup a basic firewall, a non-root user, and configure the rest of the environment under which Datasette will run:
-Add a user (I’m just picking my own name here) and follow the prompts.</p>
+<h4><a class="toc-backref" href="#id7">Firewall Configuration</a><a class="headerlink" href="#firewall-configuration" title="Permalink to this headline">¶</a></h4>
+<p>This basic firewall configuration will open ports for SSH and the Apache HTTP server.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo ufw allow OpenSSH
 <span class="c1"># Apache Full: This profile opens both port 80 (normal, unencrypted web traffic) and port 443 (TLS/SSL encrypted traffic)</span>
 sudo ufw allow <span class="s2">&quot;Apache Full&quot;</span>
@@ -297,9 +324,9 @@ sudo ufw status verbose
 </div>
 <hr class="docutils" />
 <div class="section" id="add-the-non-privileged-user-account">
-<h4><a class="toc-backref" href="#id7">Add the Non-Privileged User Account</a><a class="headerlink" href="#add-the-non-privileged-user-account" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id8">Add the Non-Privileged User Account</a><a class="headerlink" href="#add-the-non-privileged-user-account" title="Permalink to this headline">¶</a></h4>
 <p>This account will actually run Datasette itself. It should own all of the Datasette software, configuration files, and SQLite database files.</p>
-<p>Add the user:</p>
+<p>Add the user (you can pick any valid username you wish here):</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo adduser ray
 </pre></div>
 </div>
@@ -307,15 +334,16 @@ sudo ufw status verbose
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo usermod -aG sudo ray
 </pre></div>
 </div>
+<hr class="docutils" />
 <p>Now, we can restart our server, and ensure that everything comes back the way we intend.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>sudo shutdown -r now
 </pre></div>
 </div>
-<p>Once the server restarts you can test to see if the test web page is loading, and that you can log back in and test that Apache has restarted as well.</p>
+<p>Once the server restarts you can perform various tests to see if you can login to the server, test web server is loading properly, the firewall is still running, etc.</p>
 </div>
 <hr class="docutils" />
 <div class="section" id="install-and-configure-datasette">
-<h4><a class="toc-backref" href="#id8">Install and Configure Datasette</a><a class="headerlink" href="#install-and-configure-datasette" title="Permalink to this headline">¶</a></h4>
+<h4><a class="toc-backref" href="#id9">Install and Configure Datasette</a><a class="headerlink" href="#install-and-configure-datasette" title="Permalink to this headline">¶</a></h4>
 <p>After that, log back in (using your ssh key) and then change to the non-root user you created above (my usename is <code class="docutils literal notranslate"><span class="pre">ray</span></code> in the example). Make sure these steps are being done by the non-privileged user.</p>
 <p>Switch to the user created previously with the <code class="docutils literal notranslate"><span class="pre">su</span></code> command</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>su ray
@@ -439,6 +467,10 @@ https://docs.datasette.io/en/stable/deploying.html</p>
            
           </div>
           <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="how_to_contribute.html" class="btn btn-neutral float-right" title="How To Contribute" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="python_rest_api.html" class="btn btn-neutral float-left" title="Python – Using the Sierra REST API" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
 
   <hr/>
 

@@ -15,6 +15,11 @@ Python
 SQL
 ---
 
+.. toctree::
+  :maxdepth: 2
+
+  sierra-sql-tips.md
+
 Helpful Presentations and Resources from Past IUG Conferences
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
